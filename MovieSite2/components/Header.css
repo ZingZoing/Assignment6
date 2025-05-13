@@ -1,0 +1,45 @@
+.TitleBox {
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+    color: rgb(255, 255, 255);
+    width: 500px;
+    height: 75px;
+    font-size: 20px;
+    text-align: left;
+    position: fixed;
+  }
+  
+  .Title {
+    top: 5%;
+    left: 3%;
+    z-index: 3;
+  }
+
+  .button1 {
+    top: 3%;
+    font-size: 20px;
+    padding: 15px 0;
+    width: 150px;
+    height: 50px;
+    border-radius: 8px;
+    background-color: #007718;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    margin-left: 25px;
+    position: fixed;
+    z-index: 3;
+  }
+  
+  .button:hover {
+    transform: scale(1.1);
+  }
+  
+  .login {
+    right: 180px;
+  }
+  
+  .register {
+    right: 20px;
+  }
