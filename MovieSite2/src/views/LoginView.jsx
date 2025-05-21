@@ -1,18 +1,27 @@
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { UserContext } from "../Context/UserContext";
 import "./LoginView.css";
 
 export default function LoginView() {
-
   const navigate = useNavigate();
+  const { loginUser } = useContext(UserContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate('/movies/now_playing');
+
+    // Simulate user login
+    const userData = {
+      email: e.target.email.value,
+      password: e.target.password.value,
+    };
+
+    loginUser(userData); // Store user data in context
+    navigate('/movies/now_playing'); // Redirect to a protected route
   };
 
   return (
     <div className="register-container">
-
       <div className="BackMovies"></div>
 
       <div className="GradiantTop"></div>
@@ -20,7 +29,8 @@ export default function LoginView() {
       <div className="GradiantRight"></div>
       <div className="GradiantLeft"></div>
 
-      <div className="Footer2"><div class="FooterBoldBox About">About</div>
+      <div className="Footer2">
+        <div className="FooterBoldBox About">About</div>
         <div className="FooterBox WhoWeAre">Who are we?</div>
         <div className="FooterBox Hiring">We're hiring!</div>
 
@@ -35,14 +45,12 @@ export default function LoginView() {
 
         <div className="FooterBoldBox Media">Media</div>
         <div className="FooterBox Youtube">Youtube</div>
-        <div className="FooterBox Instagram">Instagram</div></div>
+        <div className="FooterBox Instagram">Instagram</div>
+      </div>
 
       <div className="register-form">
         <h2 className="register-title">Login</h2>
         <form onSubmit={handleSubmit} className="form">
-          <div className="form-group">
-
-          </div>
           <div className="form-group">
             <label className="form-label">Email</label>
             <input
@@ -64,7 +72,11 @@ export default function LoginView() {
           <button type="submit" className="submit-btn">
             Login
           </button>
-          <button className="submit-btn" onClick={() => navigate('/register')}>
+          <button
+            type="button"
+            className="submit-btn"
+            onClick={() => navigate('/register')}
+          >
             Not a member? Register here
           </button>
         </form>

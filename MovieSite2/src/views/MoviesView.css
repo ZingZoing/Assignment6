@@ -43,8 +43,38 @@
 }
 
 .movies-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 30px;
   padding: 20px;
+  justify-items: center;
   border-top: 2px solid #ccc;
+}
+
+.movie-card {
+  background-color: #222;
+  border-radius: 10px;
+  overflow: hidden;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+  width: 200px;
+}
+
+.movie-card:hover {
+  transform: scale(1.05);
+}
+
+.movie-poster {
+  width: 100%;
+  height: auto;
+  border-bottom: 2px solid #444;
+}
+
+.movie-title {
+  color: white;
+  font-size: 1rem;
+  padding: 10px;
 }
 
 a.active {
@@ -57,12 +87,14 @@ a.active {
   background-color: rgb(0, 0, 0);
   width: 25%;
   left: 0;
-  height: 120%;
+  height: calc(100vh - 50px);
   position: fixed;
   margin: 0 auto;
   z-index: 0;
+  top: 50px;
   overflow-y: auto;
   overflow-x: hidden;
+  scrollbar-color: #555 #222;
 }
 
 .genre-button {
@@ -114,4 +146,96 @@ a.active {
 .current-page {
   font-size: 18px;
   color: white;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  background-color: #333;
+  color: white;
+  position: fixed;
+  width: 100%;
+  right: 0;
+  z-index: 1000;
+  
+}
+
+.top-bar-button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  background-color: #555;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.top-bar-button:hover {
+  background-color: #777;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+}
+
+.search-bar {
+  margin-right: 10px;
+  margin-left: 20px;
+  padding: 8px 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 400px;
+  background-color: #fff;
+  color: #333;
+}
+
+.search-bar::placeholder {
+  color: #aaa;
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: #007718;
+}
+
+.search-button {
+  margin-left: 10px;
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #007718;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+  background-color: #005f14;
+}
+
+.welcome-message {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+}
+
+.buy-button {
+  padding: 8px 50px;
+  font-size: 1rem;
+  background-color: #007718;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.buy-button:hover {
+  background-color: #005f14;
 }

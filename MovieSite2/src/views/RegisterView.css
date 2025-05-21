@@ -141,3 +141,15 @@
   height: 100%;
   z-index: -1;
 }
+
+.genre-checkboxes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
