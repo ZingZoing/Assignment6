@@ -11,7 +11,8 @@ import ErrorView from './views/ErrorView';
 import MovieTileView from './views/MovieTileView';
 import MovieDetailView from './views/MovieDetailView';
 import ProtectedRoute from './components/ProtectedRoute';
-
+import SearchView from './views/SearchView';
+import SettingsView from './views/SettingsView';
 
 function App() {
   return (
@@ -23,11 +24,7 @@ function App() {
           <Route path="/register" element={<RegisterView />} />
           <Route
             path="/movies/*"
-            element={
-              <ProtectedRoute>
-                <MoviesView />
-              </ProtectedRoute>
-            }
+            element={<ProtectedRoute><MoviesView /></ProtectedRoute>}
           >
             <Route path="now_playing" element={<MovieTileView />} />
             <Route path="genre/:genre" element={<MovieTileView />} />
@@ -35,7 +32,16 @@ function App() {
             <Route path="top_rated" element={<MovieTileView />} />
             <Route path="upcoming" element={<MovieTileView />} />
             <Route path=":movieId" element={<MovieDetailView />} />
+            <Route path="search" element={<SearchView />} />
           </Route>
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <SettingsView />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/cart"
             element={

@@ -21,6 +21,14 @@ export const UserProvider = ({ children }) => {
     setAddedMovies([]);
   };
 
+  const updateFirstName = (firstName) => {
+    setUser((prevUser) => ({ ...prevUser, firstName }));
+  };
+
+  const updateLastName = (lastName) => {
+    setUser((prevUser) => ({ ...prevUser, lastName }));
+  };
+
   const addToCart = (item) => {
     setCart((prevCart) => [...prevCart, item]);
     setAddedMovies((prev) => [...prev, item.id]);
@@ -35,6 +43,10 @@ export const UserProvider = ({ children }) => {
     setCart([]);
     setAddedMovies([]);
   };
+  
+  const updatePreferredGenres = (genres) => {
+    setUser((prevUser) => ({ ...prevUser, genres }));
+  };
 
   return (
     <UserContext.Provider
@@ -45,6 +57,9 @@ export const UserProvider = ({ children }) => {
         registerUser,
         loginUser,
         logoutUser,
+        updateFirstName,
+        updateLastName,
+        updatePreferredGenres,
         addToCart,
         removeFromCart,
         clearCart,

@@ -1,0 +1,69 @@
+.settings-container {
+    position: absolute;
+    background-color: #555;
+    height: 100%;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .settings-container h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+  
+  .settings-container p {
+    font-size: 1.2rem;
+    color: rgb(255, 255, 255);
+  }
+  
+  .back-button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    color: #fff;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .back-button:hover {
+    background-color: #0056b3;
+  }
+
+  .form2-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    max-width: 400px;
+  }
+  
+  .form2-group input {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-top: 5px;
+  }
+
+  .save-button {
+    margin-top: 20px;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .save-button:hover {
+    background-color: #218838;
+  }

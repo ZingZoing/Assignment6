@@ -1,13 +1,14 @@
 import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import genres from "../../components/Genres";
 import "./MoviesView.css";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect, useCallback } from "react";
 import { UserContext } from "../Context/UserContext";
+import debounce from "lodash.debounce";
 
 function MoviesView() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, logoutUser } = useContext(UserContext); // Access user and logoutUser from context
+  const { user, logoutUser } = useContext(UserContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -30,9 +31,24 @@ function MoviesView() {
     setSearchQuery(e.target.value);
   };
 
-  const handleSearchClick = () => {
-    console.log("Search query:", searchQuery);
+  const handleSearch = useCallback(
+    debounce((query) => {
+      navigate(`/movies/search?query=${query}&page=1`);
+    }, 500),
+    []
+  );
+
+  const handleSearchKeyPress = (e) => {
+    if (e.key === "Enter") {
+      handleSearch(searchQuery);
+    }
   };
+
+  useEffect(() => {
+    return () => {
+      handleSearch.cancel();
+    };
+  }, [handleSearch]);
 
   return (
     <div className="movies-container">
@@ -46,8 +62,9 @@ function MoviesView() {
             placeholder="Search movies..."
             value={searchQuery}
             onChange={handleSearchChange}
+            onKeyPress={handleSearchKeyPress}
           />
-          <button className="search-button" onClick={handleSearchClick}>
+          <button className="search-button" onClick={() => handleSearch(searchQuery)}>
             Search
           </button>
         </div>
@@ -69,15 +86,18 @@ function MoviesView() {
 
       <div className="side-genre">
         <ul>
-          {genres.map((genre) => (
-            <button
-              key={genre.id}
-              className="genre-button"
-              onClick={() => navigate(`/movies/genre/${genre.id}`)}
-            >
-              {genre.name}
-            </button>
-          ))}
+          {user?.genres?.map((genreId) => {
+            const genre = genres.find((g) => g.id === parseInt(genreId));
+            return (
+              <button
+                key={genre.id}
+                className="genre-button"
+                onClick={() => navigate(`/movies/genre/${genre.id}`)}
+              >
+                {genre.name}
+              </button>
+            );
+          })}
         </ul>
       </div>
 
@@ -98,7 +118,7 @@ function MoviesView() {
           </NavLink>
         </nav>
         <div className="movies-content">
-          <Outlet context={{ currentPage, searchQuery }} />
+          <Outlet context={{ currentPage, setCurrentPage, searchQuery }} />
         </div>
         {!/^\/movies\/\d+$/.test(location.pathname) && (
           <div className="pagination-buttons">

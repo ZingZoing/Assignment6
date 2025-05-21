@@ -10,14 +10,13 @@ export default function LoginView() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Simulate user login
     const userData = {
       email: e.target.email.value,
       password: e.target.password.value,
     };
 
-    loginUser(userData); // Store user data in context
-    navigate('/movies/now_playing'); // Redirect to a protected route
+    loginUser(userData);
+    navigate('/movies/now_playing');
   };
 
   return (
