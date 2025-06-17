@@ -8,7 +8,7 @@ import debounce from "lodash.debounce";
 function MoviesView() {
   const navigate = useNavigate();
   const location = useLocation();
-  const { user, logoutUser } = useContext(UserContext);
+  const { user, genres: preferredGenres, logoutUser } = useContext(UserContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -69,7 +69,11 @@ function MoviesView() {
           </button>
         </div>
         <div className="welcome-message">
-          {user && <span>Welcome, {user.firstName}!</span>}
+          {user && (
+            <span>
+              Welcome, {user.firstName || user.displayName || user.email}!
+            </span>
+          )}
         </div>
         <div className="top-bar-buttons">
           <button className="top-bar-button" onClick={() => navigate("/cart")}>
@@ -86,8 +90,9 @@ function MoviesView() {
 
       <div className="side-genre">
         <ul>
-          {user?.genres?.map((genreId) => {
+          {preferredGenres.map((genreId) => {
             const genre = genres.find((g) => g.id === parseInt(genreId));
+            if (!genre) return null;
             return (
               <button
                 key={genre.id}

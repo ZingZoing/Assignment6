@@ -20,13 +20,15 @@ const genres = [
 
 export default function RegisterView() {
   const navigate = useNavigate();
-  const { registerUser } = useContext(UserContext);
+  const { registerWithEmail, loginWithGoogle } = useContext(UserContext);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const password = formData.get("password");
     const confirmPassword = formData.get("confirmPassword");
+    const firstName = formData.get("firstName");
+    const lastName = formData.get("lastName");
 
     if (password !== confirmPassword) {
       alert("Passwords do not match! Please try again.");
@@ -39,46 +41,48 @@ export default function RegisterView() {
       return;
     }
 
-    const userData = {
-      firstName: formData.get("firstName"),
-      lastName: formData.get("lastName"),
-      email: formData.get("email"),
-      genres: selectedGenres,
-    };
+    const email = formData.get("email");
+    // Pass firstName and lastName as additional arguments
+    const result = await registerWithEmail(email, password, selectedGenres, firstName, lastName);
 
-    registerUser(userData);
+    if (result.success) {
+      navigate(`/movies/now_playing`);
+    } else {
+      alert(result.error || "Registration failed.");
+    }
+  };
 
-    navigate(`/movies/now_playing`)
+  const handleGoogleSignup = async () => {
+    const result = await loginWithGoogle();
+    if (result.success) {
+      navigate('/movies/now_playing');
+    } else {
+      alert("Google signup failed.");
+    }
   };
 
   return (
     <div className="register-container">
       <div className="BackMovies"></div>
-
-      <div class="GradiantTop"></div>
-      <div class="GradiantBottom"></div>
-      <div class="GradiantRight"></div>
-      <div class="GradiantLeft"></div>
-
-      <div class="Footer2">
-        <div class="FooterBoldBox About">About</div>
-        <div class="FooterBox WhoWeAre">Who are we?</div>
-        <div class="FooterBox Hiring">We're hiring!</div>
-
-        <div class="FooterBoldBox Help">Help</div>
-        <div class="FooterBox Payments">Payments</div>
-        <div class="FooterBox Delivery">Delivery</div>
-        <div class="FooterBox ContactUs">Contact us</div>
-
-        <div class="FooterBoldBox LawOrder">Law</div>
-        <div class="FooterBox TermsNService">Terms N service</div>
-        <div class="FooterBox Cookies">Cookies</div>
-
-        <div class="FooterBoldBox Media">Media</div>
-        <div class="FooterBox Youtube">Youtube</div>
-        <div class="FooterBox Instagram">Instagram</div>
+      <div className="GradiantTop"></div>
+      <div className="GradiantBottom"></div>
+      <div className="GradiantRight"></div>
+      <div className="GradiantLeft"></div>
+      <div className="Footer2">
+        <div className="FooterBoldBox About">About</div>
+        <div className="FooterBox WhoWeAre">Who are we?</div>
+        <div className="FooterBox Hiring">We're hiring!</div>
+        <div className="FooterBoldBox Help">Help</div>
+        <div className="FooterBox Payments">Payments</div>
+        <div className="FooterBox Delivery">Delivery</div>
+        <div className="FooterBox ContactUs">Contact us</div>
+        <div className="FooterBoldBox LawOrder">Law</div>
+        <div className="FooterBox TermsNService">Terms N service</div>
+        <div className="FooterBox Cookies">Cookies</div>
+        <div className="FooterBoldBox Media">Media</div>
+        <div className="FooterBox Youtube">Youtube</div>
+        <div className="FooterBox Instagram">Instagram</div>
       </div>
-
       <div className="register-form">
         <h2 className="register-title">Register</h2>
         <form onSubmit={handleSubmit} className="form">
@@ -141,6 +145,14 @@ export default function RegisterView() {
           </div>
           <button type="submit" className="submit-btn">
             Register
+          </button>
+          <button
+            type="button"
+            className="submit-btn"
+            onClick={handleGoogleSignup}
+            style={{ backgroundColor: "#4285F4", marginTop: "10px" }}
+          >
+            Sign up with Google
           </button>
           <button
             type="button"

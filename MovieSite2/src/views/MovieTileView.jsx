@@ -10,7 +10,7 @@ function MovieTileView() {
   const navigate = useNavigate();
   const location = useLocation();
   const { currentPage } = useOutletContext();
-  const { addToCart, addedMovies } = useContext(UserContext); // Access addToCart and addedMovies from context
+  const { addToCart, addedMovies, purchases } = useContext(UserContext);
 
   const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
 
@@ -62,15 +62,26 @@ function MovieTileView() {
           />
           <button
             className={`buy-button ${
-              addedMovies.includes(movie.id) ? "disabled" : ""
+              purchases && purchases.includes(movie.id)
+                ? "disabled"
+                : addedMovies.includes(movie.id)
+                ? "disabled"
+                : ""
             }`}
             onClick={(e) => {
               e.stopPropagation();
-              handleBuy(movie);
+              if (!(purchases && purchases.includes(movie.id))) handleBuy(movie);
             }}
-            disabled={addedMovies.includes(movie.id)}
+            disabled={
+              (purchases && purchases.includes(movie.id)) ||
+              addedMovies.includes(movie.id)
+            }
           >
-            {addedMovies.includes(movie.id) ? "Added" : "Buy"}
+            {purchases && purchases.includes(movie.id)
+              ? "Bought"
+              : addedMovies.includes(movie.id)
+              ? "Added"
+              : "Buy"}
           </button>
         </div>
       ))}
